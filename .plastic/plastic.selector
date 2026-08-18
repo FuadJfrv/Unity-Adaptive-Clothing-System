@@ -1,0 +1,4 @@
+repository "Adaptive Clothing/Adaptive Clothing@18968410387953@cloud"
+  path "/"
+    br "/main"
+    co "/main"
