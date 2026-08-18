@@ -1,4 +1,4 @@
-# Adaptive Clothing System for Unty
+# Adaptive Clothing System for Unity
 
 https://github.com/user-attachments/assets/ee987bcd-852d-49ef-aa6a-9c9906dc99bf
 
