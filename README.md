@@ -10,7 +10,7 @@ https://github.com/user-attachments/assets/ee987bcd-852d-49ef-aa6a-9c9906dc99bf
 
 1. Attach the `AdaptiveClothing.cs` script to any GameObject in your scene.
 2. Assign the **Under Garment** (the mesh to shrink) and the **Over Garment** (the outer layer) in the Inspector.
-3. Click the **three dots context menu (`⋮`)** on the script component and select **Adapt Clothing (Bind Pose)**.
+3. Click the **three dots context menu (`⋮`)** on the script component and select **Adapt Clothing**.
 4. A new adapted GameObject will be created with the generated `SkinnedMeshRenderer`.
 
 ---
