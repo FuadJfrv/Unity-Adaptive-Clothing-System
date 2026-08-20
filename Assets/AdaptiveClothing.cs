@@ -1,4 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class AdaptiveClothing : MonoBehaviour
 {
@@ -10,6 +13,8 @@ public class AdaptiveClothing : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer underGarmentRenderer;
     [SerializeField] private SkinnedMeshRenderer overGarmentRenderer;
 
+    [SerializeField] private bool saveToDisk;
+    
     [ContextMenu("Adapt Clothing")]
     public void Adapt()
     {
@@ -20,6 +25,13 @@ public class AdaptiveClothing : MonoBehaviour
         }
 
         var adaptedMesh = GenerateAdaptedMesh();
+
+#if UNITY_EDITOR
+        if (saveToDisk)
+        {
+            SaveMeshToDisk(adaptedMesh);
+        }
+#endif
 
         CreateObjectWithAdaptedMesh(adaptedMesh);
 
@@ -50,7 +62,7 @@ public class AdaptiveClothing : MonoBehaviour
         Vector3[] normals = adaptedMesh.normals;
         int[] triangles = adaptedMesh.triangles;
 
-        //Pre-shrink the mesh
+        // Pre-shrink the mesh
         Vector3[] workingVerts = new Vector3[origVerts.Length];
         for (int i = 0; i < origVerts.Length; i++)
         {
@@ -78,7 +90,7 @@ public class AdaptiveClothing : MonoBehaviour
                 { }
                 else
                 {
-                    //Not covered - un-shrink it. 
+                    // Not covered - un-shrink it. 
                     workingVerts[i0] = origVerts[i0];
                     workingVerts[i1] = origVerts[i1];
                     workingVerts[i2] = origVerts[i2];
@@ -109,4 +121,18 @@ public class AdaptiveClothing : MonoBehaviour
         newRenderer.bones = underGarmentRenderer.bones;
         newRenderer.rootBone = underGarmentRenderer.rootBone;
     }
+
+#if UNITY_EDITOR
+    private void SaveMeshToDisk(Mesh mesh)
+    {
+        string path = $"Assets/{underGarmentRenderer.gameObject.name}_Adapted.asset";
+        path = AssetDatabase.GenerateUniqueAssetPath(path);
+
+        AssetDatabase.CreateAsset(mesh, path);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        Debug.Log($"Adapted mesh saved to: {path}", this);
+    }
+#endif
 }
